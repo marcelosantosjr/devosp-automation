@@ -162,28 +162,28 @@ jobs:
             echo "✅ Porta 8081 está liberada corretamente na NSG!"
           fi
 
-destroy:
-  if: ${{ github.event.inputs.destroy == 'true' }}
-  name: 🧨 Destruir Infraestrutura
-  runs-on: ubuntu-latest
+  destroy:
+    if: ${{ github.event.inputs.destroy == 'true' }}
+    name: 🧨 Destruir Infraestrutura
+    runs-on: ubuntu-latest
 
-  env:
-    ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+    env:
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
-  steps:
-    - name: Checkout do código
-      uses: actions/checkout@v3
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
 
-    - name: Login no Azure
-      uses: azure/login@v2
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Login no Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Instalar Terraform
-      uses: hashicorp/setup-terraform@v3
+      - name: Instalar Terraform
+        uses: hashicorp/setup-terraform@v3
 
-    - name: Executar Terraform Destroy
-      working-directory: infra
-      run: |
-        terraform init
-        terraform destroy -auto-approve
+      - name: Executar Terraform Destroy
+        working-directory: infra
+        run: |
+          terraform init
+          terraform destroy -auto-approve
